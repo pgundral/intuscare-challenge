@@ -1,0 +1,14 @@
+[
+    {"patient_id": 0,
+     "diagnoses": ["I10", "K21.9"]},
+    {"patient_id": 1,
+     "diagnoses": ["E78.5", "ABC.123", "U07.1", "J96.00"]},
+    {"patient_id": 2,
+     "diagnoses": []},
+    {"patient_id": 3,
+     "diagnoses": ["U07.1", "N18.30"]},
+    {"patient_id": 4,
+     "diagnoses": ["I10", "E66.9", "745.902"]},
+    {"patient_id": 5,
+     "diagnoses": ["G47.33", "I73.9", "N18.30", 1]}
+]
