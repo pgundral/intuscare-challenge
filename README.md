@@ -11,7 +11,7 @@ The `optimized_solution.py` and `async_solution.py` files contain updated soluti
 `~ 5 hrs`
 
 ## BENCHMARKS
-The `benchmarking` folder contains `benchmarks.py` which uses cProfiler and pstats to test the efficiency of the above solutions. I wanted to know what parts of my code might be too computationally complex or might otherwise slow down the program if it were to be ran for larger data sets.
+The `benchmarking` folder contains `benchmarks.py` which uses `cProfiler` and `pstats` to test the efficiency of the above solutions. I wanted to know what parts of my code might be too computationally complex or might otherwise slow down the program if it were to be ran for larger data sets.
 
 `base_solution.py` gave:
 ```
@@ -37,13 +37,13 @@ benchmarking/base_solution.prof
 
 `{method 'do_handshake' of '_ssl.SSLSocket' objects}` and other time intensive processes here are related to the API calling, which appears to be the most rate-limiting step in this program.
 
-In `optimized_solution.py` I attempted to speed up those processes by using `requests.Session()` to open a persistent session, reducing the SLS/TSL handshake bottleneck. This solution also uses the `itertools` package and `map()` to vectorize implementations that would otherwise use for-loops or list comprehension. This is slightly faster. The total runtime and percall times of the most intensive functions were both reduced.
+In `optimized_solution.py` I attempted to speed up those processes by using `requests.Session()` to open a persistent session, reducing the SLS/TLS handshake bottleneck. This solution also uses the `itertools` package and `map()` to vectorize implementations that would otherwise use for-loops or list comprehension. This was slightly faster in some cases. The total runtime and percall times of the most intensive functions were both reduced to about 1/3 of the base solution.
 
 ```
 185589 function calls (180904 primitive calls) in 0.463 seconds
 ```
 
-In `async_solution.py` I used the `aiohttp` and `asyncio` packages to set up asynchronous API calling. This allowed the program to make continuous calls without waiting for each one to return the value. Since the ICD-10 API doesn't support batch calling, this is an alternative option to reduce time spent making calls. This reduced total runtime significantly.
+In `async_solution.py` I used the `aiohttp` and `asyncio` packages to set up asynchronous API calling. This allowed the program to make continuous calls without waiting for each one to return the value. Since the ICD-10 API doesn't support batch calling, this is an alternative option to reduce time spent making calls. This also reduced total runtime significantly, nearly halving the total runtime.
 
 ```
 248342 function calls (240961 primitive calls) in 0.279 seconds
@@ -56,12 +56,12 @@ In `async_solution.py` I used the `aiohttp` and `asyncio` packages to set up asy
 ## DASHBOARD
 
 ### **ACCESS** at https://pgundral.shinyapps.io/intus-challenge/
-### **TO USE** Download `data.json` from the `dashboard` folder and upload to the website. Then hit `TRANSFORM`.
+### **TO USE** Download `data.json` from the `dashboard` folder and upload it to the website. Then, hit `TRANSFORM`.
 
 I used the `shiny` library in Python to create an interactive webpage that can take an `.json` file input and transform the data using one of two solutions above. The app also uses `cProfile` to display the same metrics described above. This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. 
 
-This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. I would hope that this page would make using this transform program easier for external clients, but also for internal ones trying to better understand the code efficiency and spot errors.
+I would hope that this page would make using this transform program easier for external clients, but also for internal ones trying to better understand the code efficiency and spot errors.
 
-The app is written in the shiny-core syntax, to help separate the UI and Server side code which runs our solutions. I have experience making visualizations in `shiny` for R, so this was not too time intensive. 
+The app is written in the shiny-core syntax rather than shiny-express. This helps separate the UI and Server side code which runs our solutions. I have experience making visualizations in `shiny` for R, so this was not too time intensive. 
 
 `~ 3 hrs`
