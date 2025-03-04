@@ -3,6 +3,9 @@ import aiohttp
 import asyncio
 import ssl
 
+# ASYNCH ("Batch" API calling) SOLUTION
+# (1) Using asyncio and aiohttp to make async API calls, lowering the wait time between responses/calls
+
 patient_data = [
     {"patient_id": 0,
      "diagnoses": ["I10", "K21.9"]},
@@ -21,6 +24,7 @@ patient_data = [
 base_url = ("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search"
             "?sf={search_fields}&terms={search_term}&maxList={max_list}")
 
+# NOTE: Define an async function for API calling
 async def get_icd_description(session, code):
     search_url = base_url.format(search_fields="code,desc", search_term=code, max_list=1)
     async with session.get(search_url) as response:  # Disable SSL verification
@@ -28,6 +32,7 @@ async def get_icd_description(session, code):
         # print(f"Fetched {code}: {result}")  # Debug print
         return code, result
 
+# NOTE: Define our solution as async
 async def solution(data):
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
@@ -37,6 +42,7 @@ async def solution(data):
     code_descriptions, malformed_codes, priority_codes = {}, [], []
     priority_keywords = ["respiratory failure", "covid"]
 
+    # NOTE: Gather responses asyncronously using our custom function
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
         tasks = [get_icd_description(session, code) for code in all_codes]
         responses = await asyncio.gather(*tasks)
@@ -56,6 +62,7 @@ async def solution(data):
 
     transformed_data = []
 
+    ## TRANSFORM and update our data
     for patient in data:
         described_diagnoses, malformed_diagnoses, priority_diagnoses = [], [], []
         for code in patient["diagnoses"]:
@@ -74,11 +81,12 @@ async def solution(data):
             "malformed_diagnoses": malformed_diagnoses
         })
 
+    ## CLEAN, SORT, and RETURN
     transformed_data.sort(key=lambda x: len(x["priority_diagnoses"]), reverse=True)
     return transformed_data
 
+# NOTE: Using asyncio.run() to run our async solution function
 output = asyncio.run(solution(patient_data))
-# print(json.dumps(output, indent=4))
 
 expected_output = [
         {'patient_id': 1,
