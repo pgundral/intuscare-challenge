@@ -3,7 +3,7 @@ Pranav Gundrala | Mar 2025
 
 ## SOLUTIONS
 ### Base Solution
-The `base_solution.py` file contains my initial solution for transforming the data. It relies of list comprehension to extract all the patient codes, and then API calls to get descriptions. The solution includes a statement to check if the code has already been defined to reduce API calling.
+The `base_solution.py` file contains my initial solution for transforming the data. It relies on list comprehension to extract all the patient codes, and then API calls to get descriptions. The solution includes a statement to check if the code has already been defined to reduce API calling.
 
 ### Other Solutions
 The `optimized_solution.py` and `async_solution.py` files contain updated solutions that build on the one above. They leverage new techniques to speed up the program. Details below...
