@@ -1,16 +1,16 @@
 # INTUS CARE CHALLENGE
 Pranav Gundrala | Mar 2025
 
-### SOLUTIONS
-#### Base Solution
+## SOLUTIONS
+### Base Solution
 The `base_solution.py` file contains my initial solution for transforming the data. It relies of list comprehension to extract all the patient codes, and then API calls to get descriptions. The solution includes a statement to check if the code has already been defined to reduce API calling.
 
-#### Other Solutions
+### Other Solutions
 The `optimized_solution.py` and `async_solution.py` files contain updated solutions that build on the one above. They leverage new techniques to speed up the program. Details below...
 
 `~ 5 hrs`
 
-### BENCHMARKS
+## BENCHMARKS
 The `benchmarking` folder contains `benchmarks.py` which uses cProfiler and pstats to test the efficiency of the above solutions. I wanted to know what parts of my code might be too computationally complex or might otherwise slow down the program if it were to be ran for larger data sets.
 
 `base_solution.py` gave:
@@ -49,11 +49,15 @@ In `async_solution.py` I used the `aiohttp` and `asyncio` packages to set up asy
 248342 function calls (240961 primitive calls) in 0.279 seconds
 ```
 
-**RUN** `benchmarks.py` to see more details.
+### **RUN** `benchmarks.py` to see more details.
 
 `~ 1 hr`
 
-### DASHBOARD
+## DASHBOARD
+
+### **ACCESS** at https://pgundral.shinyapps.io/intus-challenge/
+### **TO USE** Download `data.json` from the `dashboard` folder and upload to the website. Then hit `TRANSFORM`.
+
 I used the `shiny` library in Python to create an interactive webpage that can take an `.json` file input and transform the data using one of two solutions above. The app also uses `cProfile` to display the same metrics described above. This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. 
 
 This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. The app is written in the shiny-core syntax, to help separate the UI and Server side code which runs our solutions.
