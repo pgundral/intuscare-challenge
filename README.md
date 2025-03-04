@@ -60,6 +60,8 @@ In `async_solution.py` I used the `aiohttp` and `asyncio` packages to set up asy
 
 I used the `shiny` library in Python to create an interactive webpage that can take an `.json` file input and transform the data using one of two solutions above. The app also uses `cProfile` to display the same metrics described above. This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. 
 
-This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. The app is written in the shiny-core syntax, to help separate the UI and Server side code which runs our solutions.
+This dashboard was a fun visualization to help show what the programs are doing to the data, but it also acts as a debugging tool. I would hope that this page would make using this transform program easier for external clients, but also for internal ones trying to better understand the code efficiency and spot errors.
 
-I have experience making visualizations in `shiny` for R, so this was not too time intensive. `~ 3 hrs`
+The app is written in the shiny-core syntax, to help separate the UI and Server side code which runs our solutions. I have experience making visualizations in `shiny` for R, so this was not too time intensive. 
+
+`~ 3 hrs`
